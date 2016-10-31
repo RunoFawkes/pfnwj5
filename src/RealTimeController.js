@@ -13,7 +13,7 @@ var SerialPort = browserserialport.SerialPort;
 var Plataforma = require('./Data.js');
 
 /**  @member {SerialPort}  Plataforma*/
-var calc = new Plataforma(369, 334);
+var calc = new Plataforma(184.5, 167);
 
 /**  @member {calc}  port*/
 var port;
@@ -87,7 +87,7 @@ function update(tgx, tgy) {
 	ctx.globalAlpha = 1;
 	ctx.fillStyle = '#000000';
 	ctx.beginPath();
-	ctx.arc(tgx, tgy, 4, 0, Math.PI * 2);
+	ctx.arc((tgx + calc.a) * 2, (tgy + calc.b) * 2, 4, 0, Math.PI * 2);
 	ctx.fill();
 }
 
@@ -102,7 +102,7 @@ function coleta(dados) {
 	linhas.forEach(function(part) {
 		var result = calc.RTCOP(part);
 		btConnected(Math.floor(1 / (result.t / 1000)) + ' Hz');
-		update(result.x + 369, result.y + 334);
+		update(result.x, result.y);
 	});
 }
 

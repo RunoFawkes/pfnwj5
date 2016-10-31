@@ -6,8 +6,8 @@ var sm = require('simple-statistics');
 /**
  * Classe responsavel por administrar e receber os dados da plataforma.
  * Faz todos os calculos com os dados da plataforma e gera os valores para o relatorio
- * @param {string} pa - Medida entre o centro e a lateral da plataforma.
- * @param {string} pb - Medida entre o centro e o topo da plataforma.
+ * @param {string} pa - Medida entre o centro da plataforma e o centro de medição no eixo x.
+ * @param {string} pb - Medida entre o centro da plataforma e o centro de medição no eixo y.
  * @class
  */
 function PlatData(pa, pb) {
@@ -250,10 +250,10 @@ PlatData.prototype.calcVELTotal = function() {
 /**
  * Calcula a area preenchida pelo deslocamento do COP
  * Utiliza uma oval tracada com base nas medianas das amplitudes em x e y do COP
- * @todo Pode ser alterado para tracar um poligono com as coordenadas perifiricas
- * DEPENDE DE calcCOP
+ * Função desenhada para lidar com medições de baixa frequencia.
+ * @deprecated desde v0.3.1
  */
-PlatData.prototype.calcAREA = function() {
+PlatData.prototype.calcAREA_lowFreq = function() {
 	var medianAP = sm.median(this.CPy);
 	var medianML = sm.median(this.CPx);
 	var deltaAPmin = Math.abs(medianAP - sm.min(this.CPy));
@@ -265,6 +265,17 @@ PlatData.prototype.calcAREA = function() {
 	this.area = Math.PI * deltaAP * deltaML;
 };
 
+/**
+ * Calcula a area preenchida pelo deslocamento do COP
+ * Utiliza uma oval tracada com base nas medianas das amplitudes em x e y do COP
+ * @todo Pode ser alterado para tracar um poligono com as coordenadas perifiricas
+ * DEPENDE DE calcCOP
+ */
+PlatData.prototype.calcAREA = function() {
+	var rAP = (sm.max(this.CPy) - sm.min(this.CPy)) / 2;
+	var rML = (sm.max(this.CPx) - sm.min(this.CPx)) / 2;
+	this.area = Math.PI * rAP * rML;
+};
 
 
 /**

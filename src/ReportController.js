@@ -92,7 +92,7 @@ function addPoint(tgx, tgy) {
 	ctx.globalAlpha = 1;
 	ctx.fillStyle = '#000000';
 	ctx.beginPath();
-	ctx.arc((tgx * 2) + 369, (tgy * 2) + 334, 4, 0, Math.PI * 2);
+	ctx.arc((tgx + calc.a) * 2, (tgy + calc.b) * 2, 4, 0, Math.PI * 2);
 	ctx.fill();
 }
 
@@ -192,8 +192,11 @@ function ACTUpdateTime() {
  * Converte e arredonda números de mm para cm
  * @arg {Number} num - numero a ser tratado
  */
-function convertNum(num) {
-	return Math.round(num * 10) / 100;
+function convertNum(num, digit) {
+	if (!digit) {
+		digit = 10;
+	}
+	return Math.round(num * 10) / (10 * digit);
 }
 
 /**
@@ -210,13 +213,13 @@ function genReport() {
 	$('#desML').text('Médio-lateral: ' + convertNum(calc.DevML) + ' cm');
 	$('#rmsAP').text('Ântero-posterior: ' + convertNum(calc.rmsAP) + ' cm');
 	$('#rmsML').text('Médio-lateral: ' + convertNum(calc.rmsML) + ' cm');
-	$('#freq').text(convertNum(calc.avgFrq * 10) + 'Hz'); // FIXME: POG
+	$('#freq').text(convertNum(calc.avgFrq, 1) + 'Hz');
 	$('#velAP').text('Ântero-posterior: ' + convertNum(calc.VMap) + ' cm/s');
 	$('#velML').text('Médio-lateral: ' + convertNum(calc.VMml) + ' cm/s');
 	$('#veltot').text(convertNum(calc.VMT) + ' cm/s');
 	$('#ampAP').text('Ântero-posterior: ' + convertNum(calc.ampAP) + ' cm');
 	$('#ampML').text('Médio-lateral: ' + convertNum(calc.ampML) + ' cm');
-	$('#area').text(convertNum(calc.area) + ' cm²');
+	$('#area').text(convertNum(calc.area, 100) + ' cm²');
 }
 
 /**
