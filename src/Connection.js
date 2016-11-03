@@ -1,3 +1,9 @@
+/** JQuery */
+global.$ = $; //sinto cheiro de gambiarra o.O
+
+/** @external  browser-serialport */
+var browserserialport = require('browser-serialport');
+var SerialPort = browserserialport.SerialPort;
 
 /** @module Connection */
 
