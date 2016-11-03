@@ -11,9 +11,13 @@ global.$ = $;
 var browserserialport = require('browser-serialport');
 var SerialPort = browserserialport.SerialPort;
 var Plataforma = require('./Data.js');
+var Connection = require('./Connection.js');
 
 /**  @member {SerialPort}  Plataforma*/
 var calc = new Plataforma(184.5, 167);
+
+/**  @member {Connection} conn*/
+var conn = new Connection();
 
 /**  @member {calc}  port*/
 var port;
@@ -26,8 +30,6 @@ var ctx = $('#canvas')[0].getContext('2d');
 
 /**  @member {boolean}  isConnected*/
 var isConnected = false;
-
-
 
 ////////////////////////////////
 /// UI
